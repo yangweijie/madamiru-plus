@@ -18,6 +18,8 @@ impl MediaServer {
             .await
             .map_err(|e| DlnaError::Server(e.to_string()))?;
 
+        log::warn!("DLNA: Local IP: {}", host_ip);
+
         // infer_subtitle_from_video returns Option<Option<PathBuf>>
         // We need to extract the inner Option<PathBuf> if exists
         #[allow(clippy::needless_match, clippy::manual_map)]
@@ -48,5 +50,10 @@ impl MediaServer {
 
     pub fn url(&self) -> &str {
         &self.url
+    }
+
+    /// Consume self and return the inner streaming server
+    pub fn into_inner(self) -> crab_dlna::MediaStreamingServer {
+        self._server
     }
 }

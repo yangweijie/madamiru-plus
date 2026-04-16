@@ -56,8 +56,12 @@ pub enum Event {
     DlnaStop,
     DlnaSeek(u64),
     DlnaSetVolume(u8),
+    EnhanceSelectPreset(String),
+    EnhanceUpdateParams(crate::video_enhance::EnhanceParams),
+    EnhanceToggleCompare,
 }
 
+#[derive(Debug)]
 pub enum Update {
     SavedGridSettings {
         grid_id: grid::Id,
@@ -116,6 +120,7 @@ pub enum Modal {
         is_paused: bool,
         volume: u8,
     },
+    Enhance,
 }
 
 impl Modal {
@@ -157,6 +162,7 @@ impl Modal {
             Self::ConfirmDiscardPlaylist { .. } => None,
             Self::DlnaDeviceSelect { .. } => None,
             Self::DlnaControl { .. } => None,
+            Self::Enhance { .. } => None,
         }
     }
 
@@ -168,7 +174,8 @@ impl Modal {
             | Self::ConfirmLoadPlaylist { .. }
             | Self::ConfirmDiscardPlaylist { .. }
             | Self::DlnaDeviceSelect { .. }
-            | Self::DlnaControl { .. } => ModalVariant::Confirm,
+            | Self::DlnaControl { .. }
+            | Self::Enhance { .. } => ModalVariant::Confirm,
             Self::Settings => ModalVariant::Editor,
         }
     }
@@ -191,6 +198,7 @@ impl Modal {
             Self::ConfirmDiscardPlaylist { .. } => None,
             Self::DlnaDeviceSelect { .. } => None,
             Self::DlnaControl { .. } => None,
+            Self::Enhance { .. } => Some(text("视频增强").into()),
         }
     }
 
@@ -213,8 +221,18 @@ impl Modal {
                     Some(Message::PlaylistReset { force: true })
                 }
             }
-            Self::DlnaDeviceSelect { .. } => Some(Message::CloseModal),
+            Self::DlnaDeviceSelect { devices, .. } => {
+                // 获取第一个设备并触发选择
+                log::warn!("DLNA: DlnaDeviceSelect message() called - {} devices", devices.len());
+                let result = devices.first().map(|d| {
+                    log::warn!("DLNA: Creating SelectDevice message for: {}", d.name);
+                    Message::Modal { event: Event::DlnaDeviceSelected(d.clone()) }
+                });
+                log::warn!("DLNA: message() returning: {:?}", result.is_some());
+                result
+            }
             Self::DlnaControl { .. } => Some(Message::CloseModal),
+            Self::Enhance { .. } => Some(Message::CloseModal),
         }
     }
 
@@ -227,6 +245,7 @@ impl Modal {
         collection: &media::Collection,
         active_media: HashSet<&Media>,
     ) -> Option<Column> {
+        log::warn!("DLNA: body() called for modal type");
         let mut col = Column::new().spacing(15).padding(padding::right(10));
 
         match self {
@@ -534,11 +553,71 @@ impl Modal {
                     lang::ask::discard_changes()
                 )));
             }
-            Self::DlnaDeviceSelect { devices, .. } => {
-                col = col.push(text(format!("Found {} DLNA devices", devices.len())));
+            Self::DlnaDeviceSelect { devices, current_media } => {
+                log::warn!("DLNA: Rendering DlnaDeviceSelect body with {} devices", devices.len());
+                col = col.push(text(format!("发现 {} 个 DLNA 设备", devices.len())));
+                
+                for device in devices {
+                    log::warn!("DLNA: Creating button for device: {}", device.name);
+                    let device_clone = device.clone();
+                    col = col.push(
+                        Row::new()
+                            .spacing(10)
+                            .push(
+                                button::primary(device.name.clone().to_string())
+                                    .on_press(Message::Modal {
+                                        event: Event::DlnaDeviceSelected(device_clone),
+                                    })
+                            )
+                    );
+                }
+                
+                if let Some(media) = current_media {
+                    col = col.push(text(format!("当前媒体: {:?}", media)));
+                }
             }
             Self::DlnaControl { device, .. } => {
                 col = col.push(text(format!("DLNA: {}", device.name)));
+            }
+            Self::Enhance => {
+                let current_preset = &config.playback.enhance_preset;
+                
+                col = col
+                    .push(text("视频增强"))
+                    .push(text("选择预设:"))
+                    .push(
+                        Row::new()
+                            .spacing(10)
+                            .push(
+                                button::primary("动漫优化".to_string())
+                                    .on_press(Message::Enhance(crate::gui::common::EnhanceMessage::SelectPreset("anime".to_string())))
+                            )
+                            .push(
+                                button::primary("电影增强".to_string())
+                                    .on_press(Message::Enhance(crate::gui::common::EnhanceMessage::SelectPreset("movie".to_string())))
+                            )
+                            .push(
+                                button::primary("标清转高清".to_string())
+                                    .on_press(Message::Enhance(crate::gui::common::EnhanceMessage::SelectPreset("sdhd".to_string())))
+                            )
+                    )
+                    .push(
+                        Row::new()
+                            .spacing(10)
+                            .push(
+                                button::primary("鲜艳模式".to_string())
+                                    .on_press(Message::Enhance(crate::gui::common::EnhanceMessage::SelectPreset("vivid".to_string())))
+                            )
+                            .push(
+                                button::primary("复古风格".to_string())
+                                    .on_press(Message::Enhance(crate::gui::common::EnhanceMessage::SelectPreset("retro".to_string())))
+                            )
+                            .push(
+                                button::primary("关闭".to_string())
+                                    .on_press(Message::Enhance(crate::gui::common::EnhanceMessage::SelectPreset("off".to_string())))
+                            )
+                    )
+                    .push(text(format!("当前: {}", current_preset)));
             }
         }
 
@@ -602,7 +681,8 @@ impl Modal {
             | Self::ConfirmLoadPlaylist { .. }
             | Self::ConfirmDiscardPlaylist { .. }
             | Self::DlnaDeviceSelect { .. }
-            | Self::DlnaControl { .. } => false,
+            | Self::DlnaControl { .. }
+            | Self::Enhance { .. } => false,
             Self::GridSettings {
                 settings, histories, ..
             } => match subject {
@@ -631,7 +711,8 @@ impl Modal {
             | Self::ConfirmLoadPlaylist { .. }
             | Self::ConfirmDiscardPlaylist { .. }
             | Self::DlnaDeviceSelect { .. }
-            | Self::DlnaControl { .. } => None,
+            | Self::DlnaControl { .. }
+            | Self::Enhance { .. } => None,
             Self::GridSettings {
                 grid_id,
                 tab,
@@ -714,12 +795,30 @@ impl Modal {
                 }
                 Event::PlayMedia(_) => None,
                 // DLNA events - handled elsewhere
-                Event::DlnaDeviceSelected(_) => None,
+                Event::DlnaDeviceSelected(device) => {
+                    log::warn!("DLNA: Event::DlnaDeviceSelected received for: {}", device.name);
+                    // 发送选择设备消息到 App
+                    return Some(Update::Task(Task::done(
+                        crate::gui::common::DlnaMessage::SelectDevice(device.clone()).into()
+                    )));
+                }
                 Event::DlnaPlay => None,
                 Event::DlnaPause => None,
                 Event::DlnaStop => None,
                 Event::DlnaSeek(_) => None,
                 Event::DlnaSetVolume(_) => None,
+                Event::EnhanceSelectPreset(_preset_id) => {
+                    // Handled by Message::Enhance in view
+                    None
+                }
+                Event::EnhanceUpdateParams(_params) => {
+                    // Handled by Message::Enhance in view
+                    None
+                }
+                Event::EnhanceToggleCompare => {
+                    // Handled by Message::Enhance in view
+                    None
+                }
             },
             Self::GridMedia { grid_id, .. } => match event {
                 Event::PlayMedia(media) => Some(Update::PlayMedia {
@@ -741,6 +840,7 @@ impl Modal {
         collection: &media::Collection,
         active_media: HashSet<&Media>,
     ) -> Element {
+        log::warn!("DLNA: modal.view() called");
         Stack::new()
             .push({
                 let mut area = mouse_area(

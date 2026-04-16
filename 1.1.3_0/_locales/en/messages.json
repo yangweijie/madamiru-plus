@@ -1,0 +1,484 @@
+{
+   "addToWhitelist": {
+      "message": "Add $1 to whitelist",
+      "placeholders": {
+         "1": {
+            "content": "$1"
+         }
+      }
+   },
+   "addWebsite": {
+      "message": "Add website"
+   },
+   "addWebsitePlaceholder": {
+      "message": "e.g. youtube.com"
+   },
+   "back": {
+      "message": "Back"
+   },
+   "balanced": {
+      "description": "Balanced sort option",
+      "message": "Balanced"
+   },
+   "blur": {
+      "description": "Blur filter label",
+      "message": "Blur"
+   },
+   "blurred": {
+      "description": "Blurred label",
+      "message": "Blurred"
+   },
+   "bright": {
+      "description": "Bright label",
+      "message": "Bright"
+   },
+   "brightness": {
+      "description": "Brightness filter label",
+      "message": "Brightness"
+   },
+   "cancel": {
+      "description": "Cancel button label",
+      "message": "Cancel"
+   },
+   "color": {
+      "description": "Color label",
+      "message": "Color"
+   },
+   "contrast": {
+      "description": "Contrast filter label",
+      "message": "Contrast"
+   },
+   "dark": {
+      "description": "Dark label",
+      "message": "Dark"
+   },
+   "delete": {
+      "description": "Delete button label",
+      "message": "Delete"
+   },
+   "desaturated": {
+      "description": "Desaturated label",
+      "message": "Desaturated"
+   },
+   "done": {
+      "message": "Done"
+   },
+   "effects": {
+      "description": "Effects section label",
+      "message": "Effects"
+   },
+   "enableExtension": {
+      "description": "Enable extension toggle label",
+      "message": "Enable extension"
+   },
+   "enableUpscaling": {
+      "description": "Toggle label for upscaling",
+      "message": "Enable upscaling"
+   },
+   "errorOccurred": {
+      "message": "An error occurred"
+   },
+   "errorTryReload": {
+      "message": "Please try reloading the extension"
+   },
+   "experimentalMode": {
+      "message": "Experimental Mode"
+   },
+   "experimentalModeHint": {
+      "message": "Enable experimental advanced AI & temporal upscaling shaders (FSR3, DLSS-like, WebGPU)"
+   },
+   "experimentalWarning": {
+      "message": "⚠️ Experimental features may impact performance on some devices"
+   },
+   "extDescription": {
+      "description": "Extension description",
+      "message": "Upscale and enhance videos"
+   },
+   "extName": {
+      "description": "Extension name",
+      "message": "NexVid"
+   },
+   "extensionMode": {
+      "message": "Extension mode"
+   },
+   "filters": {
+      "description": "Filters section label",
+      "message": "Filters"
+   },
+   "gray": {
+      "description": "Gray label",
+      "message": "Gray"
+   },
+   "grayscale": {
+      "description": "Grayscale filter label",
+      "message": "Grayscale"
+   },
+   "highFpsWarning": {
+      "message": "High FPS values may impact performance"
+   },
+   "hueRotate": {
+      "description": "Hue rotation filter label",
+      "message": "Hue Rotation"
+   },
+   "infoRefresh": {
+      "description": "Info message about page refresh",
+      "message": "Refresh the page after enabling the extension"
+   },
+   "infoUpscaling": {
+      "description": "Info message about upscaling",
+      "message": "Upscaling improves video quality in real-time"
+   },
+   "loading": {
+      "message": "Loading..."
+   },
+   "localVideo": {
+      "description": "Local video section label",
+      "message": "Local Video"
+   },
+   "localVideoHint": {
+      "description": "Hint about local video feature",
+      "message": "Watch local video files with upscaling and filters"
+   },
+   "manageWhitelist": {
+      "message": "Manage whitelist"
+   },
+   "minResolutionForUpscaling": {
+      "description": "Label for minimum resolution threshold setting",
+      "message": "Disable upscaling automatically if video is at least"
+   },
+   "minimalistView": {
+      "message": "Minimalist View"
+   },
+   "modeOff": {
+      "message": "OFF"
+   },
+   "modeOn": {
+      "message": "ON"
+   },
+   "modeWhitelist": {
+      "message": "WHITELIST"
+   },
+   "myPresets": {
+      "description": "Presets section label",
+      "message": "My Presets"
+   },
+   "noPresetsSaved": {
+      "description": "Empty presets message",
+      "message": "No presets saved"
+   },
+   "noShaderSelected": {
+      "description": "No shader selected message",
+      "message": "No shader selected"
+   },
+   "noWhitelistedSites": {
+      "message": "No websites whitelisted yet"
+   },
+   "none": {
+      "description": "None label",
+      "message": "None"
+   },
+   "normal": {
+      "description": "Normal label",
+      "message": "Normal"
+   },
+   "normalView": {
+      "message": "Fancy View"
+   },
+   "openLocalVideo": {
+      "description": "Button to open local video player",
+      "message": "Open Local Video Player"
+   },
+   "perf": {
+      "description": "Short for Performance",
+      "message": "Perf."
+   },
+   "performance": {
+      "description": "Performance rating label",
+      "message": "Performance"
+   },
+   "presetDeleted": {
+      "message": "Preset deleted"
+   },
+   "presetNamePlaceholder": {
+      "description": "Placeholder for preset name input",
+      "message": "Preset name..."
+   },
+   "presetNameRequired": {
+      "message": "Please enter a preset name"
+   },
+   "presetSaved": {
+      "message": "Preset saved successfully"
+   },
+   "profileHigherEndModeA": {
+      "message": "Maximum quality"
+   },
+   "profileHigherEndModeAFast": {
+      "message": "Max performance"
+   },
+   "profileHigherEndModeB": {
+      "message": "Soft maximum quality"
+   },
+   "profileHigherEndModeBFast": {
+      "message": "Soft max performance"
+   },
+   "profileHigherEndModeC": {
+      "message": "Denoising maximum quality"
+   },
+   "profileHigherEndModeCFast": {
+      "message": "Denoising max performance"
+   },
+   "profileLowerEndModeA": {
+      "message": "Quality restoration"
+   },
+   "profileLowerEndModeAFast": {
+      "message": "Fast restoration"
+   },
+   "profileLowerEndModeB": {
+      "message": "Quality soft restoration"
+   },
+   "profileLowerEndModeBFast": {
+      "message": "Fast soft restoration"
+   },
+   "profileLowerEndModeC": {
+      "message": "Quality denoising"
+   },
+   "profileLowerEndModeCFast": {
+      "message": "Fast denoising"
+   },
+   "profileSimpleL2x": {
+      "message": "Light"
+   },
+   "profileSimpleM2x": {
+      "message": "Balanced - Recommended"
+   },
+   "profileSimpleS2x": {
+      "message": "Slow - High quality"
+   },
+   "profileSimpleUL2x": {
+      "message": "Ultra light - Fastest"
+   },
+   "profileSimpleVL2x": {
+      "message": "Very light"
+   },
+   "quality": {
+      "description": "Quality rating label",
+      "message": "Quality"
+   },
+   "qualityProfile": {
+      "description": "Label for quality profile",
+      "message": "Quality profile"
+   },
+   "reload": {
+      "message": "Reload"
+   },
+   "removeFromWhitelist": {
+      "message": "Remove from whitelist"
+   },
+   "resetEffects": {
+      "description": "Reset effects button label",
+      "message": "Reset Effects"
+   },
+   "resetShaders": {
+      "description": "Reset shaders button label",
+      "message": "Reset Shaders"
+   },
+   "saturation": {
+      "description": "Saturation filter label",
+      "message": "Saturation"
+   },
+   "save": {
+      "description": "Save button label",
+      "message": "Save"
+   },
+   "saveCurrentPreset": {
+      "description": "Tooltip for save preset button",
+      "message": "Save current preset"
+   },
+   "selectProfile": {
+      "description": "Profile selection label",
+      "message": "Select a profile"
+   },
+   "sepia": {
+      "description": "Sepia filter label",
+      "message": "Sepia"
+   },
+   "shaderAnalogNoiseDesc": {
+      "message": "Analog noise and VHS interference"
+   },
+   "shaderAnimeLineSharpenDesc": {
+      "message": "Sharpens anime outlines for crisp details"
+   },
+   "shaderBloomSoftGlowDesc": {
+      "message": "Pulsating soft glow"
+   },
+   "shaderCelShadingDesc": {
+      "message": "Cartoon effect with color quantization"
+   },
+   "shaderChromaticAberrationDesc": {
+      "message": "Animated radial chromatic aberration"
+   },
+   "shaderColorBleedDesc": {
+      "message": "Animated VHS color bleeding"
+   },
+   "shaderCrtCurvatureDesc": {
+      "message": "CRT screen curvature with flickering"
+   },
+   "shaderCrtScanlinesDesc": {
+      "message": "TV scan lines with flickering"
+   },
+   "shaderDatamoshDesc": {
+      "message": "Block compression and artifacts"
+   },
+   "shaderDigitalNoiseDesc": {
+      "message": "Pixelated digital noise by blocks"
+   },
+   "shaderDlssNeuralDesc": {
+      "message": "AI-inspired neural network upscaling with feature extraction"
+   },
+   "shaderDreamyGlowDesc": {
+      "message": "Ethereal glow for emotional scenes"
+   },
+   "shaderEdgeDetectionDesc": {
+      "message": "Detects and enhances manga-style edges"
+   },
+   "shaderExperimentalUltraDesc": {
+      "message": "Experimental ultra quality with multi-scale detail synthesis"
+   },
+   "shaderFilmGrainDesc": {
+      "message": "Adaptive film grain"
+   },
+   "shaderFsr2QualityDesc": {
+      "message": "Enhanced FSR with advanced edge detection and multi-pass sharpening"
+   },
+   "shaderFsr3TemporalDesc": {
+      "message": "FSR 3-like temporal upscaling with motion estimation and detail preservation"
+   },
+   "shaderFsrUpscaleDesc": {
+      "message": "AMD FSR - Edge-adaptive spatial upscaling"
+   },
+   "shaderHalftoneDesc": {
+      "message": "Manga-style halftone dot pattern"
+   },
+   "shaderInterferenceLinesDesc": {
+      "message": "Horizontal interference lines"
+   },
+   "shaderKaleidoscopeDesc": {
+      "message": "Rotating kaleidoscope effect"
+   },
+   "shaderMirrorGlitchDesc": {
+      "message": "Random glitched mirror effects"
+   },
+   "shaderMotionBlurDesc": {
+      "message": "Directional motion blur effect"
+   },
+   "shaderOldFilmProjectorDesc": {
+      "message": "Old projector with scratches and jumps"
+   },
+   "shaderPixelateMosaicDesc": {
+      "message": "Animated pixelation (retro effect)"
+   },
+   "shaderPosterizeDesc": {
+      "message": "Color reduction for poster effect"
+   },
+   "shaderRgbShiftWaveDesc": {
+      "message": "Wavy RGB shift waves"
+   },
+   "shaderRgbSplitGlitchDesc": {
+      "message": "Brutal RGB separation by bands"
+   },
+   "shaderScanlineDistortionDesc": {
+      "message": "Scanline distortion"
+   },
+   "shaderScreenToneDesc": {
+      "message": "Manga black and white screen tones"
+   },
+   "shaderSoftFocusDesc": {
+      "message": "Soft blur for romantic/dreamy scenes"
+   },
+   "shaderSpeedLinesDesc": {
+      "message": "Radial speed lines manga style"
+   },
+   "shaderVhsGlitchDesc": {
+      "message": "Degraded VHS cassette effect"
+   },
+   "shaderVhsTrackingDesc": {
+      "message": "VHS tracking problem with bands"
+   },
+   "shaderVibrantColorBoostDesc": {
+      "message": "Boosts saturation for vibrant anime colors"
+   },
+   "shaderWarpDistortionDesc": {
+      "message": "Analog wavy distortion"
+   },
+   "shaderWebgpuSuperResDesc": {
+      "message": "WebGPU-style super resolution with bicubic interpolation"
+   },
+   "shaders": {
+      "description": "Shaders section label",
+      "message": "Shaders"
+   },
+   "shadersSelected": {
+      "description": "Multiple shaders selected message",
+      "message": "shaders selected"
+   },
+   "sharp": {
+      "description": "Sharp label",
+      "message": "Sharp"
+   },
+   "siteAdded": {
+      "message": "Site added to whitelist"
+   },
+   "siteNotWhitelisted": {
+      "message": "This site is not whitelisted"
+   },
+   "siteRemoved": {
+      "message": "Site removed from whitelist"
+   },
+   "siteWhitelisted": {
+      "message": "$1 is whitelisted ✓",
+      "placeholders": {
+         "1": {
+            "content": "$1"
+         }
+      }
+   },
+   "soft": {
+      "description": "Soft label",
+      "message": "Soft"
+   },
+   "statusActive": {
+      "description": "Active status indicator",
+      "message": "Active"
+   },
+   "storeName": {
+      "description": "Extension name",
+      "message": "NexVid - Real-time Video Upscaler & Enhancer"
+   },
+   "strong": {
+      "description": "Strong label",
+      "message": "Strong"
+   },
+   "subtitle": {
+      "description": "Subtitle",
+      "message": "Anime4K.js"
+   },
+   "targetFps": {
+      "description": "Label for target FPS",
+      "message": "Target FPS"
+   },
+   "unknownShader": {
+      "description": "Unknown shader message",
+      "message": "Unknown shader"
+   },
+   "vibrant": {
+      "description": "Vibrant label",
+      "message": "Vibrant"
+   },
+   "vintage": {
+      "description": "Vintage label",
+      "message": "Vintage"
+   },
+   "whitelistedWebsites": {
+      "message": "Whitelisted Websites"
+   }
+}

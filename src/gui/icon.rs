@@ -44,6 +44,8 @@ pub enum Icon {
     VolumeHigh,
     Cast,
     CastConnected,
+    Tune,
+    Compare,
 }
 
 impl Icon {
@@ -86,6 +88,8 @@ impl Icon {
             Self::VolumeHigh => '\u{e050}',
             Self::Cast => '\u{e905}',
             Self::CastConnected => '\u{e909}',
+            Self::Tune => '\u{e8d2}',
+            Self::Compare => '\u{e8c8}',
         }
     }
 

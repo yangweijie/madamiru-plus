@@ -1,0 +1,37 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "icons/icon128.png",
+         "16": "icons/icon16.png",
+         "48": "icons/icon48.png"
+      },
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "content.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_end"
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_extDescription__",
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA19+I34D6v5xblVQlaQ7/8P1j3pDFlS2WT/yKDlEluU+l/6yvnISDt2QYzc8EwOywoyMjHt3HJ8ki1nV2eUd5n+ctnfFnI6b09bFtzlYTj4WN8QNmgToh9SN3d9cuPagq4G2IPy593WVB3AScIu/kIlQh0BA08LhuIafY221Dt15MPm2mpD9Kvi2KHY4ybhG6EbVKNGhc4QVkdnpDwNVSi1CJrfyAIJC+qzDYZntpADt8LqmU72m5S1V+txPRiRl1MiJh7LGrpcjuR+pu7KsaluPG0HbMvkiE+bm9Kkc0oUyv6D7B6nQTIE07FBaLle7dW2avCl6fb/jZrSOhgrszNwIDAQAB",
+   "manifest_version": 3,
+   "name": "__MSG_storeName__",
+   "permissions": [ "activeTab", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.1.3",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "content.js", "lib/anime4k.js", "pageContext/anime4k-injector.js", "pageContext/ShaderManager.js", "pageContext/shaders.js" ]
+   } ]
+}

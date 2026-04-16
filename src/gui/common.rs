@@ -115,6 +115,7 @@ pub enum Message {
         message: Box<Self>,
     },
     Dlna(DlnaMessage),
+    Enhance(EnhanceMessage),
 }
 
 #[derive(Debug, Clone)]
@@ -133,6 +134,22 @@ pub enum DlnaMessage {
     Seek(u64),
     SetVolume(u8),
     StopCast,
+}
+
+#[derive(Debug, Clone)]
+pub enum EnhanceMessage {
+    ShowModal,
+    HideModal,
+    SelectPreset(String),
+    UpdateParams(crate::video_enhance::EnhanceParams),
+    ToggleCompareMode,
+    SetComparePosition(f32),
+}
+
+impl From<EnhanceMessage> for Message {
+    fn from(msg: EnhanceMessage) -> Self {
+        Self::Enhance(msg)
+    }
 }
 
 impl From<DlnaMessage> for Message {

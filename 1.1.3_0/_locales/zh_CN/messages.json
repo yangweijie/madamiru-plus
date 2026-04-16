@@ -1,0 +1,484 @@
+{
+   "addToWhitelist": {
+      "message": "将 $1 加入白名单",
+      "placeholders": {
+         "1": {
+            "content": "$1"
+         }
+      }
+   },
+   "addWebsite": {
+      "message": "添加网站"
+   },
+   "addWebsitePlaceholder": {
+      "message": "例如 youtube.com"
+   },
+   "back": {
+      "message": "返回"
+   },
+   "balanced": {
+      "description": "Balanced sort option",
+      "message": "平衡"
+   },
+   "blur": {
+      "description": "模糊滤镜标签",
+      "message": "模糊"
+   },
+   "blurred": {
+      "description": "Blurred label",
+      "message": "模糊"
+   },
+   "bright": {
+      "description": "亮标签",
+      "message": "亮"
+   },
+   "brightness": {
+      "description": "亮度滤镜标签",
+      "message": "亮度"
+   },
+   "cancel": {
+      "description": "Cancel button label",
+      "message": "取消"
+   },
+   "color": {
+      "description": "彩色标签",
+      "message": "彩色"
+   },
+   "contrast": {
+      "description": "对比度滤镜标签",
+      "message": "对比度"
+   },
+   "dark": {
+      "description": "暗标签",
+      "message": "暗"
+   },
+   "delete": {
+      "description": "删除按钮标签",
+      "message": "删除"
+   },
+   "desaturated": {
+      "description": "低饱和标签",
+      "message": "低饱和"
+   },
+   "done": {
+      "message": "完成"
+   },
+   "effects": {
+      "description": "效果部分标签",
+      "message": "效果"
+   },
+   "enableExtension": {
+      "description": "Enable extension toggle label",
+      "message": "启用扩展"
+   },
+   "enableUpscaling": {
+      "description": "启用提升画质的标签",
+      "message": "启用画质提升"
+   },
+   "errorOccurred": {
+      "message": "发生错误"
+   },
+   "errorTryReload": {
+      "message": "请重新加载扩展"
+   },
+   "experimentalMode": {
+      "message": "实验模式"
+   },
+   "experimentalModeHint": {
+      "message": "启用高级AI和时序放大着色器（FSR3、DLSS风格、WebGPU）"
+   },
+   "experimentalWarning": {
+      "message": "⚠️ 实验功能可能会影响某些设备的性能"
+   },
+   "extDescription": {
+      "description": "扩展描述",
+      "message": "提升和增强视频质量"
+   },
+   "extName": {
+      "description": "扩展名称",
+      "message": "视频增强器"
+   },
+   "extensionMode": {
+      "message": "扩展模式"
+   },
+   "filters": {
+      "description": "滤镜部分标签",
+      "message": "滤镜"
+   },
+   "gray": {
+      "description": "灰色标签",
+      "message": "灰色"
+   },
+   "grayscale": {
+      "description": "灰度滤镜标签",
+      "message": "灰度"
+   },
+   "highFpsWarning": {
+      "message": "高FPS值可能影响性能"
+   },
+   "hueRotate": {
+      "description": "色相旋转滤镜标签",
+      "message": "色相旋转"
+   },
+   "infoRefresh": {
+      "description": "Info message about page refresh",
+      "message": "启用扩展后请刷新页面"
+   },
+   "infoUpscaling": {
+      "description": "Info message about upscaling",
+      "message": "实时提升视频质量"
+   },
+   "loading": {
+      "message": "加载中..."
+   },
+   "localVideo": {
+      "description": "Local video section label",
+      "message": "本地视频"
+   },
+   "localVideoHint": {
+      "description": "Hint about local video feature",
+      "message": "使用增强和滤镜观看本地视频文件"
+   },
+   "manageWhitelist": {
+      "message": "管理白名单"
+   },
+   "minResolutionForUpscaling": {
+      "description": "最低分辨率阈值设置的标签",
+      "message": "如果视频至少达到以下分辨率，则自动禁用放大"
+   },
+   "minimalistView": {
+      "message": "极简视图"
+   },
+   "modeOff": {
+      "message": "关闭"
+   },
+   "modeOn": {
+      "message": "开启"
+   },
+   "modeWhitelist": {
+      "message": "白名单"
+   },
+   "myPresets": {
+      "description": "预设部分标签",
+      "message": "我的预设"
+   },
+   "noPresetsSaved": {
+      "description": "Empty presets message",
+      "message": "没有保存的预设"
+   },
+   "noShaderSelected": {
+      "description": "No shader selected message",
+      "message": "未选择着色器"
+   },
+   "noWhitelistedSites": {
+      "message": "白名单中暂无网站"
+   },
+   "none": {
+      "description": "无标签",
+      "message": "无"
+   },
+   "normal": {
+      "description": "正常标签",
+      "message": "正常"
+   },
+   "normalView": {
+      "message": "花哨视图"
+   },
+   "openLocalVideo": {
+      "description": "Button to open local video player",
+      "message": "打开本地视频播放器"
+   },
+   "perf": {
+      "description": "性能的缩写",
+      "message": "性能"
+   },
+   "performance": {
+      "description": "性能评级标签",
+      "message": "性能"
+   },
+   "presetDeleted": {
+      "message": "预设已删除"
+   },
+   "presetNamePlaceholder": {
+      "description": "预设名称占位符",
+      "message": "预设名称..."
+   },
+   "presetNameRequired": {
+      "message": "请输入预设名称"
+   },
+   "presetSaved": {
+      "message": "预设已成功保存"
+   },
+   "profileHigherEndModeA": {
+      "message": "最高质量"
+   },
+   "profileHigherEndModeAFast": {
+      "message": "最大性能"
+   },
+   "profileHigherEndModeB": {
+      "message": "柔和最高质量"
+   },
+   "profileHigherEndModeBFast": {
+      "message": "柔和最大性能"
+   },
+   "profileHigherEndModeC": {
+      "message": "降噪最高质量"
+   },
+   "profileHigherEndModeCFast": {
+      "message": "降噪最大性能"
+   },
+   "profileLowerEndModeA": {
+      "message": "质量修复"
+   },
+   "profileLowerEndModeAFast": {
+      "message": "快速修复"
+   },
+   "profileLowerEndModeB": {
+      "message": "质量柔和修复"
+   },
+   "profileLowerEndModeBFast": {
+      "message": "快速柔和修复"
+   },
+   "profileLowerEndModeC": {
+      "message": "质量降噪"
+   },
+   "profileLowerEndModeCFast": {
+      "message": "快速降噪"
+   },
+   "profileSimpleL2x": {
+      "message": "轻量"
+   },
+   "profileSimpleM2x": {
+      "message": "平衡 - 推荐"
+   },
+   "profileSimpleS2x": {
+      "message": "慢速 - 高质量"
+   },
+   "profileSimpleUL2x": {
+      "message": "超轻量 - 最快"
+   },
+   "profileSimpleVL2x": {
+      "message": "非常轻量"
+   },
+   "quality": {
+      "description": "质量评级标签",
+      "message": "质量"
+   },
+   "qualityProfile": {
+      "description": "质量配置标签",
+      "message": "质量配置"
+   },
+   "reload": {
+      "message": "重新加载"
+   },
+   "removeFromWhitelist": {
+      "message": "从白名单中移除"
+   },
+   "resetEffects": {
+      "description": "重置效果按钮标签",
+      "message": "重置效果"
+   },
+   "resetShaders": {
+      "description": "重置着色器按钮标签",
+      "message": "重置效果"
+   },
+   "saturation": {
+      "description": "饱和度滤镜标签",
+      "message": "饱和度"
+   },
+   "save": {
+      "description": "Save button label",
+      "message": "保存"
+   },
+   "saveCurrentPreset": {
+      "description": "保存预设按钮提示",
+      "message": "保存当前预设"
+   },
+   "selectProfile": {
+      "description": "配置选择标签",
+      "message": "选择配置"
+   },
+   "sepia": {
+      "description": "复古棕滤镜标签",
+      "message": "复古棕"
+   },
+   "shaderAnalogNoiseDesc": {
+      "message": "模拟噪声和VHS干扰"
+   },
+   "shaderAnimeLineSharpenDesc": {
+      "message": "锐化动漫轮廓以获得清晰细节"
+   },
+   "shaderBloomSoftGlowDesc": {
+      "message": "脉动柔和光晕"
+   },
+   "shaderCelShadingDesc": {
+      "message": "带色彩量化的卡通效果"
+   },
+   "shaderChromaticAberrationDesc": {
+      "message": "径向色差动画"
+   },
+   "shaderColorBleedDesc": {
+      "message": "VHS颜色溢出动画"
+   },
+   "shaderCrtCurvatureDesc": {
+      "message": "CRT屏幕曲率与闪烁"
+   },
+   "shaderCrtScanlinesDesc": {
+      "message": "电视扫描线与闪烁"
+   },
+   "shaderDatamoshDesc": {
+      "message": "块压缩和伪影"
+   },
+   "shaderDigitalNoiseDesc": {
+      "message": "分块数字噪声"
+   },
+   "shaderDlssNeuralDesc": {
+      "message": "神经网络风格的AI放大，具有特征提取和重建"
+   },
+   "shaderDreamyGlowDesc": {
+      "message": "情感场景的空灵光晕"
+   },
+   "shaderEdgeDetectionDesc": {
+      "message": "检测并增强漫画风格边缘"
+   },
+   "shaderExperimentalUltraDesc": {
+      "message": "实验性超高质量模式，具有多尺度细节合成"
+   },
+   "shaderFilmGrainDesc": {
+      "message": "自适应胶片颗粒"
+   },
+   "shaderFsr2QualityDesc": {
+      "message": "增强型FSR，具有高级边缘检测和多遍锐化"
+   },
+   "shaderFsr3TemporalDesc": {
+      "message": "类FSR 3时序放大，具有运动估计和细节保留"
+   },
+   "shaderFsrUpscaleDesc": {
+      "message": "AMD FSR - 边缘自适应空间放大"
+   },
+   "shaderHalftoneDesc": {
+      "message": "漫画风格半色调点图案"
+   },
+   "shaderInterferenceLinesDesc": {
+      "message": "水平干扰线"
+   },
+   "shaderKaleidoscopeDesc": {
+      "message": "旋转万花筒效果"
+   },
+   "shaderMirrorGlitchDesc": {
+      "message": "随机镜像故障效果"
+   },
+   "shaderMotionBlurDesc": {
+      "message": "方向运动模糊效果"
+   },
+   "shaderOldFilmProjectorDesc": {
+      "message": "带划痕和跳动的旧投影仪"
+   },
+   "shaderPixelateMosaicDesc": {
+      "message": "动画像素化（复古效果）"
+   },
+   "shaderPosterizeDesc": {
+      "message": "减少颜色以获得海报效果"
+   },
+   "shaderRgbShiftWaveDesc": {
+      "message": "RGB波浪偏移"
+   },
+   "shaderRgbSplitGlitchDesc": {
+      "message": "RGB条带分离故障"
+   },
+   "shaderScanlineDistortionDesc": {
+      "message": "扫描线失真"
+   },
+   "shaderScreenToneDesc": {
+      "message": "漫画黑白网点"
+   },
+   "shaderSoftFocusDesc": {
+      "message": "浪漫/梦幻场景的柔和模糊"
+   },
+   "shaderSpeedLinesDesc": {
+      "message": "径向速度线漫画风格"
+   },
+   "shaderVhsGlitchDesc": {
+      "message": "降级VHS磁带效果"
+   },
+   "shaderVhsTrackingDesc": {
+      "message": "VHS磁道问题与条纹"
+   },
+   "shaderVibrantColorBoostDesc": {
+      "message": "提升饱和度以获得鲜艳的动漫色彩"
+   },
+   "shaderWarpDistortionDesc": {
+      "message": "模拟波浪失真"
+   },
+   "shaderWebgpuSuperResDesc": {
+      "message": "WebGPU风格超分辨率，具有双三次插值"
+   },
+   "shaders": {
+      "description": "Shaders section label",
+      "message": "着色器"
+   },
+   "shadersSelected": {
+      "description": "Multiple shaders selected message",
+      "message": "个着色器已选择"
+   },
+   "sharp": {
+      "description": "清晰标签",
+      "message": "清晰"
+   },
+   "siteAdded": {
+      "message": "网站已加入白名单"
+   },
+   "siteNotWhitelisted": {
+      "message": "此网站不在白名单中"
+   },
+   "siteRemoved": {
+      "message": "网站已从白名单中移除"
+   },
+   "siteWhitelisted": {
+      "message": "$1 已在白名单中 ✓",
+      "placeholders": {
+         "1": {
+            "content": "$1"
+         }
+      }
+   },
+   "soft": {
+      "description": "柔和标签",
+      "message": "柔和"
+   },
+   "statusActive": {
+      "description": "活跃状态指示器",
+      "message": "活跃"
+   },
+   "storeName": {
+      "description": "Extension name",
+      "message": "NexVid - Real-time Video Upscaler & Enhancer"
+   },
+   "strong": {
+      "description": "强烈标签",
+      "message": "强烈"
+   },
+   "subtitle": {
+      "description": "副标题",
+      "message": "Anime4K.js"
+   },
+   "targetFps": {
+      "description": "目标帧率标签",
+      "message": "目标帧率"
+   },
+   "unknownShader": {
+      "description": "Unknown shader message",
+      "message": "未知着色器"
+   },
+   "vibrant": {
+      "description": "鲜艳标签",
+      "message": "鲜艳"
+   },
+   "vintage": {
+      "description": "复古标签",
+      "message": "复古"
+   },
+   "whitelistedWebsites": {
+      "message": "白名单网站"
+   }
+}

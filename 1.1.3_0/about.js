@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("backBtn");e&&e.addEventListener("click",()=>{chrome.action.openPopup(),window.close()})});

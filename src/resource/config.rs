@@ -4,6 +4,7 @@ use crate::{
     lang::{self, Language},
     prelude::{app_dir, Error, StrictPath},
     resource::{ResourceFile, SaveableResourceFile},
+    video_enhance,
 };
 
 #[derive(Debug, Clone)]
@@ -115,6 +116,12 @@ pub struct Playback {
     pub pause_on_unfocus: bool,
     /// Whether to synchronize play/pause/seek events in media of the same category.
     pub synchronized: bool,
+    /// Video enhance preset ID
+    #[serde(rename = "enhance_preset")]
+    pub enhance_preset: String,
+    /// Video enhance parameters
+    #[serde(rename = "enhance_params")]
+    pub enhance_params: video_enhance::EnhanceParams,
 }
 
 impl Playback {
@@ -157,6 +164,8 @@ impl Default for Playback {
             image_duration: NonZeroUsize::new(10).unwrap(),
             pause_on_unfocus: false,
             synchronized: false,
+            enhance_preset: "off".to_owned(),
+            enhance_params: video_enhance::EnhanceParams::DEFAULT,
         }
     }
 }
@@ -208,6 +217,8 @@ mod tests {
                     image_duration: NonZeroUsize::new(2).unwrap(),
                     pause_on_unfocus: true,
                     synchronized: true,
+                    enhance_preset: "off".to_owned(),
+                    enhance_params: video_enhance::EnhanceParams::DEFAULT,
                 },
             },
             config,
@@ -231,6 +242,14 @@ playback:
   image_duration: 10
   pause_on_unfocus: false
   synchronized: false
+  enhance_preset: "off"
+  enhance_params:
+    brightness: 0.0
+    contrast: 0.0
+    saturation: 0.0
+    hue: 0.0
+    sharpen: 0.0
+    denoise: 0.0
 "#
             .trim(),
             serde_yaml::to_string(&Config::default()).unwrap().trim(),

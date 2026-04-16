@@ -13,6 +13,7 @@ mod metadata;
 mod path;
 mod prelude;
 mod resource;
+mod video_enhance;
 
 #[cfg(test)]
 mod testing;
@@ -29,6 +30,7 @@ fn prepare_logging() -> Result<flexi_logger::LoggerHandle, flexi_logger::FlexiLo
         .unwrap()
         .log_to_file(flexi_logger::FileSpec::default().directory(app_dir().as_std_path_buf().unwrap()))
         .write_mode(flexi_logger::WriteMode::BufferAndFlush)
+        .print_message()  // 添加这行来输出到终端
         .rotate(
             flexi_logger::Criterion::Size(1024 * 1024 * 10),
             flexi_logger::Naming::Timestamps,

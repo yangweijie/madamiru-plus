@@ -57,6 +57,9 @@ pub struct App {
     #[cfg_attr(not(feature = "audio"), allow(unused))]
     default_audio_output_device: Option<String>,
     dlna_state: crate::dlna::DlnaState,
+    enhance_modal_open: bool,
+    enhance_compare_mode: bool,
+    enhance_compare_pos: f32,
 }
 
 impl App {
@@ -221,6 +224,9 @@ impl App {
                 #[cfg(not(feature = "audio"))]
                 default_audio_output_device: None,
                 dlna_state: Default::default(),
+                enhance_modal_open: false,
+                enhance_compare_mode: false,
+                enhance_compare_pos: 0.5,
             },
             Task::batch(commands),
         )
@@ -376,7 +382,7 @@ impl App {
         context: media::RefreshContext,
         playlist: Option<StrictPath>,
     ) -> Task<Message> {
-        log::info!("Finding media ({context:?})");
+        log::warn!("Finding media ({context:?})");
         let mut tasks = vec![];
 
         for source in sources {
@@ -512,7 +518,7 @@ impl App {
         let device = Self::get_audio_device();
 
         if self.default_audio_output_device != device {
-            log::info!(
+            log::warn!(
                 "Default audio device changed: {:?} -> {:?}",
                 self.default_audio_output_device.as_ref(),
                 device.as_ref()
@@ -1009,8 +1015,10 @@ impl App {
                 Task::none()
             }
             Message::Modal { event } => {
+                log::warn!("DLNA: Received Modal event: {:?}", event);
                 if let Some(modal) = self.modals.last_mut() {
                     if let Some(update) = modal.update(event) {
+                        log::warn!("DLNA: Modal update returned: {:?}", update);
                         match update {
                             modal::Update::SavedGridSettings { grid_id, settings } => {
                                 let context = media::RefreshContext::Edit;
@@ -1384,6 +1392,7 @@ impl App {
                 self.update(*message)
             }
             Message::Dlna(msg) => self.update_dlna(msg),
+            Message::Enhance(msg) => self.update_enhance(msg),
         }
     }
 
@@ -1436,9 +1445,44 @@ impl App {
                 self.dlna_state = DlnaState::Idle;
             }
             DM::SelectDevice(device) => {
-                self.dlna_state = DlnaState::Connecting(device);
+                // 从 grid sources 获取第一个可用媒体
+                let mut first_media_path: Option<StrictPath> = None;
+                
+                for (_grid_id, grid) in self.grids.iter() {
+                    for source in grid.sources() {
+                        if let media::Source::Path { path } = source {
+                            first_media_path = Some(path.clone());
+                            break;
+                        }
+                    }
+                    if first_media_path.is_some() {
+                        break;
+                    }
+                }
+                
+                if let Some(path) = first_media_path {
+                    log::warn!("DLNA: SelectDevice - starting cast with media: {:?}", path);
+                    // 关闭模态框并触发投屏
+                    self.close_modal();
+                    return Task::done(
+                        crate::gui::common::DlnaMessage::CastMedia {
+                            path: path.clone(),
+                            device: device.clone(),
+                        }.into()
+                    );
+                } else {
+                    // 没有可用的媒体
+                    log::warn!("DLNA: SelectDevice - no media available");
+                    self.dlna_state = DlnaState::Idle;
+                    self.show_modal(Modal::Error {
+                        variant: crate::prelude::Error::ConfigInvalid {
+                            why: "没有可投屏的媒体".to_string(),
+                        },
+                    });
+                }
             }
             DM::CastMedia { path, device } => {
+                log::warn!("DLNA: CastMedia - starting cast to device: {} for path: {:?}", device.name, path);
                 // Pause local playback and start casting
                 for (_grid_id, grid) in self.grids.iter_mut() {
                     grid.update_all_players(
@@ -1452,6 +1496,7 @@ impl App {
                 let path_clone = path.clone();
                 return Task::perform(
                     async move {
+                        log::warn!("DLNA: Creating media server for: {:?}", path_clone);
                         let path_buf = path_clone.as_std_path_buf()
                             .map_err(|e| crate::dlna::DlnaError::Server(e.to_string()))?;
                         let server = crate::dlna::server::MediaServer::new(
@@ -1460,21 +1505,23 @@ impl App {
                         )
                         .await?;
 
+                        log::warn!("DLNA: Creating renderer for device: {}", device_clone.location);
                         let renderer = crate::dlna::control::create_renderer(
                             &device_clone.location,
                             5,
                         )
                         .await?;
 
-                        // We need to keep the server alive while playing
-                        // Use a tuple to tie their lifetimes
-                        let _ = (server, renderer);
+                        log::warn!("DLNA: Starting playback...");
+                        // Play the media on the DLNA device
+                        let streaming_server = server.into_inner();
+                        renderer.play(streaming_server).await?;
 
-                        Ok::<_, crate::dlna::DlnaError>(())
+                        Ok::<_, crate::dlna::DlnaError>(device_clone)
                     },
                     |result| match result {
-                        Ok(_) => {
-                            Message::Ignore
+                        Ok(_device) => {
+                            crate::gui::common::DlnaMessage::Play.into()
                         }
                         Err(e) => {
                             crate::gui::common::DlnaMessage::ScanError(e.to_string()).into()
@@ -1485,9 +1532,50 @@ impl App {
             DM::StopCast => {
                 self.dlna_state = DlnaState::Idle;
             }
-            DM::Play | DM::Pause | DM::Stop | DM::Seek(_) | DM::SetVolume(_) => {
+            DM::Play => {
+                // 投屏成功后更新状态
+                if let DlnaState::Connecting(device) = &self.dlna_state {
+                    self.dlna_state = DlnaState::Playing {
+                        device: device.clone(),
+                        media_url: url::Url::parse("http://localhost").unwrap(),
+                        position: Duration::ZERO,
+                        is_paused: false,
+                    };
+                }
+            }
+            DM::Pause | DM::Stop | DM::Seek(_) | DM::SetVolume(_) => {
                 // These would require keeping a reference to the renderer
                 // For now, just update the UI state
+            }
+        }
+        Task::none()
+    }
+
+    fn update_enhance(&mut self, msg: crate::gui::common::EnhanceMessage) -> Task<Message> {
+        use crate::gui::common::EnhanceMessage as EM;
+
+        match msg {
+            EM::ShowModal => {
+                self.show_modal(crate::gui::modal::Modal::Enhance);
+            }
+            EM::HideModal => {
+                self.close_modal();
+            }
+            EM::SelectPreset(preset_id) => {
+                if let Some(preset) = crate::video_enhance::PRESETS.iter().find(|p| p.id == preset_id) {
+                    self.config.playback.enhance_preset = preset_id;
+                    self.config.playback.enhance_params = preset.params;
+                }
+            }
+            EM::UpdateParams(params) => {
+                self.config.playback.enhance_params = params;
+                self.config.playback.enhance_preset = "custom".to_string();
+            }
+            EM::ToggleCompareMode => {
+                self.enhance_compare_mode = !self.enhance_compare_mode;
+            }
+            EM::SetComparePosition(pos) => {
+                self.enhance_compare_pos = pos.clamp(0.0, 1.0);
             }
         }
         Task::none()
@@ -1588,6 +1676,12 @@ impl App {
                         .on_press(Message::ShowSettings)
                         .obscured(obscured)
                         .tooltip_below(lang::thing::settings()),
+                )
+                .push(
+                    button::icon(Icon::Tune)
+                        .on_press(Message::Enhance(crate::gui::common::EnhanceMessage::ShowModal))
+                        .obscured(obscured)
+                        .tooltip_below("视频增强".to_string()),
                 );
 
             let center_controls = Container::new(
