@@ -76,6 +76,7 @@ pub enum ModalVariant {
     Editor,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub enum Modal {
     Settings,
@@ -154,6 +155,8 @@ impl Modal {
             Self::AppUpdate { .. } => None,
             Self::ConfirmLoadPlaylist { .. } => None,
             Self::ConfirmDiscardPlaylist { .. } => None,
+            Self::DlnaDeviceSelect { .. } => None,
+            Self::DlnaControl { .. } => None,
         }
     }
 
@@ -163,7 +166,9 @@ impl Modal {
             Self::GridSettings { .. }
             | Self::AppUpdate { .. }
             | Self::ConfirmLoadPlaylist { .. }
-            | Self::ConfirmDiscardPlaylist { .. } => ModalVariant::Confirm,
+            | Self::ConfirmDiscardPlaylist { .. }
+            | Self::DlnaDeviceSelect { .. }
+            | Self::DlnaControl { .. } => ModalVariant::Confirm,
             Self::Settings => ModalVariant::Editor,
         }
     }
@@ -184,6 +189,8 @@ impl Modal {
             Self::AppUpdate { .. } => None,
             Self::ConfirmLoadPlaylist { .. } => None,
             Self::ConfirmDiscardPlaylist { .. } => None,
+            Self::DlnaDeviceSelect { .. } => None,
+            Self::DlnaControl { .. } => None,
         }
     }
 
@@ -206,6 +213,8 @@ impl Modal {
                     Some(Message::PlaylistReset { force: true })
                 }
             }
+            Self::DlnaDeviceSelect { .. } => Some(Message::CloseModal),
+            Self::DlnaControl { .. } => Some(Message::CloseModal),
         }
     }
 
@@ -525,6 +534,12 @@ impl Modal {
                     lang::ask::discard_changes()
                 )));
             }
+            Self::DlnaDeviceSelect { devices, .. } => {
+                col = col.push(text(format!("Found {} DLNA devices", devices.len())));
+            }
+            Self::DlnaControl { device, .. } => {
+                col = col.push(text(format!("DLNA: {}", device.name)));
+            }
         }
 
         Some(col)
@@ -585,7 +600,9 @@ impl Modal {
             | Self::Errors { .. }
             | Self::AppUpdate { .. }
             | Self::ConfirmLoadPlaylist { .. }
-            | Self::ConfirmDiscardPlaylist { .. } => false,
+            | Self::ConfirmDiscardPlaylist { .. }
+            | Self::DlnaDeviceSelect { .. }
+            | Self::DlnaControl { .. } => false,
             Self::GridSettings {
                 settings, histories, ..
             } => match subject {
@@ -612,7 +629,9 @@ impl Modal {
             | Self::Errors { .. }
             | Self::AppUpdate { .. }
             | Self::ConfirmLoadPlaylist { .. }
-            | Self::ConfirmDiscardPlaylist { .. } => None,
+            | Self::ConfirmDiscardPlaylist { .. }
+            | Self::DlnaDeviceSelect { .. }
+            | Self::DlnaControl { .. } => None,
             Self::GridSettings {
                 grid_id,
                 tab,
@@ -694,6 +713,13 @@ impl Modal {
                     })
                 }
                 Event::PlayMedia(_) => None,
+                // DLNA events - handled elsewhere
+                Event::DlnaDeviceSelected(_) => None,
+                Event::DlnaPlay => None,
+                Event::DlnaPause => None,
+                Event::DlnaStop => None,
+                Event::DlnaSeek(_) => None,
+                Event::DlnaSetVolume(_) => None,
             },
             Self::GridMedia { grid_id, .. } => match event {
                 Event::PlayMedia(media) => Some(Update::PlayMedia {

@@ -16,6 +16,7 @@ fn main() {
 
     // https://gitlab.freedesktop.org/gstreamer/gstreamer-rs/-/merge_requests/1516
     #[cfg(all(feature = "video", target_os = "macos"))]
+    #[allow(clippy::op_ref)]
     match system_deps::Config::new().probe() {
         Ok(deps) => {
             let usr = std::path::Path::new("/usr/lib");

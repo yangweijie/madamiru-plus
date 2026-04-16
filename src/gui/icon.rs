@@ -5,6 +5,7 @@ use crate::gui::{
     widget::{text, Text},
 };
 
+#[allow(dead_code)]
 pub enum Icon {
     Add,
     ArrowDownward,

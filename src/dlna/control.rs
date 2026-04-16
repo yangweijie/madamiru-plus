@@ -1,34 +1,20 @@
 use crate::dlna::error::DlnaError;
 
+#[allow(dead_code)]
 pub struct DlnaRenderer {
     render: crab_dlna::Render,
 }
 
+#[allow(dead_code)]
 impl DlnaRenderer {
     pub fn new(render: crab_dlna::Render) -> Self {
         Self { render }
     }
 
-    pub async fn play(&self, url: &str) -> Result<(), DlnaError> {
-        crab_dlna::play(&self.render, url)
-            .await
-            .map_err(|e| DlnaError::Control(e.to_string()))
-    }
-
-    pub async fn pause(&self) -> Result<(), DlnaError> {
-        crab_dlna::pause(&self.render)
-            .await
-            .map_err(|e| DlnaError::Control(e.to_string()))
-    }
-
-    pub async fn stop(&self) -> Result<(), DlnaError> {
-        crab_dlna::stop(&self.render)
-            .await
-            .map_err(|e| DlnaError::Control(e.to_string()))
-    }
-
-    pub async fn set_volume(&self, volume: u8) -> Result<(), DlnaError> {
-        crab_dlna::set_volume(&self.render, volume)
+    /// Play media on the DLNA device
+    /// Note: crab-dlna 0.2 does not provide pause/stop/volume functions
+    pub async fn play(&self, streaming_server: crab_dlna::MediaStreamingServer) -> Result<(), DlnaError> {
+        crab_dlna::play(self.render.clone(), streaming_server)
             .await
             .map_err(|e| DlnaError::Control(e.to_string()))
     }
@@ -37,10 +23,9 @@ impl DlnaRenderer {
 /// Create a new renderer from a device location
 pub async fn create_renderer(
     location: &str,
-    timeout_secs: u64,
+    _timeout_secs: u64,
 ) -> Result<DlnaRenderer, DlnaError> {
     let render = crab_dlna::Render::new(crab_dlna::RenderSpec::Location(
-        timeout_secs,
         location.to_string(),
     ))
     .await

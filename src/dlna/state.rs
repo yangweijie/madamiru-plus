@@ -4,8 +4,10 @@ use url::Url;
 use super::device::DlnaDevice;
 use super::DlnaError;
 
-#[derive(Debug, Clone)]
+#[allow(dead_code)]
+#[derive(Debug, Clone, Default)]
 pub enum DlnaState {
+    #[default]
     Idle,
     Scanning,
     DevicesReady(Vec<DlnaDevice>),
@@ -17,12 +19,6 @@ pub enum DlnaState {
         is_paused: bool,
     },
     Error(DlnaError),
-}
-
-impl Default for DlnaState {
-    fn default() -> Self {
-        Self::Idle
-    }
 }
 
 impl PartialEq for DlnaState {

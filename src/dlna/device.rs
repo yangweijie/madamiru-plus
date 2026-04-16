@@ -1,8 +1,9 @@
 use serde::{Deserialize, Serialize};
+use std::fmt;
 
 use crate::dlna::error::DlnaError;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, PartialEq)]
 pub struct DlnaDevice {
     pub name: String,
     pub location: String,
@@ -33,10 +34,13 @@ pub async fn discover_devices(timeout_secs: u64) -> Result<Vec<DlnaDevice>, Dlna
 
     Ok(renders
         .into_iter()
-        .map(|r| DlnaDevice {
-            name: r.friendly_name().to_string(),
-            location: r.description_url().to_string(),
-            udn: r.udn().to_string(),
+        .map(|r| {
+            let device = &r.device;
+            DlnaDevice {
+                name: device.friendly_name().to_string(),
+                location: device.url().to_string(),
+                udn: device.url().to_string(), // Use URL as fallback for UDN
+            }
         })
         .collect())
 }

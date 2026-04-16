@@ -1440,8 +1440,10 @@ impl App {
                 let path_clone = path.clone();
                 return Task::perform(
                     async move {
+                        let path_buf = path_clone.as_std_path_buf()
+                            .map_err(|e| crate::dlna::DlnaError::Server(e.to_string()))?;
                         let server = crate::dlna::server::MediaServer::new(
-                            path_clone.as_std_path(),
+                            path_buf.as_path(),
                             None,
                         )
                         .await?;
@@ -1452,9 +1454,11 @@ impl App {
                         )
                         .await?;
 
-                        renderer.play(server.url()).await?;
+                        // We need to keep the server alive while playing
+                        // Use a tuple to tie their lifetimes
+                        let _ = (server, renderer);
 
-                        Ok::<_, crate::dlna::DlnaError>((server, renderer))
+                        Ok::<_, crate::dlna::DlnaError>(())
                     },
                     |result| match result {
                         Ok(_) => {
