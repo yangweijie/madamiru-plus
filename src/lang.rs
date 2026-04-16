@@ -33,6 +33,10 @@ pub enum Language {
     /// Brazilian Portuguese
     #[serde(rename = "pt-BR")]
     PortugueseBrazilian,
+
+    /// Chinese (Simplified)
+    #[serde(rename = "zh-CN")]
+    ChineseSimplified,
 }
 
 impl Language {
@@ -42,6 +46,7 @@ impl Language {
         Self::French,
         Self::Polish,
         Self::PortugueseBrazilian,
+        Self::ChineseSimplified,
     ];
 
     pub fn id(&self) -> LanguageIdentifier {
@@ -51,6 +56,7 @@ impl Language {
             Self::German => "de-DE",
             Self::Polish => "pl-PL",
             Self::PortugueseBrazilian => "pt-BR",
+            Self::ChineseSimplified => "zh-CN",
         };
         id.parse().unwrap()
     }
@@ -62,6 +68,7 @@ impl Language {
             Self::German => "Deutsch",
             Self::Polish => "Polski",
             Self::PortugueseBrazilian => "Português brasileiro",
+            Self::ChineseSimplified => "简体中文",
         }
     }
 
@@ -72,6 +79,7 @@ impl Language {
             Self::German => 2,
             Self::Polish => 100,
             Self::PortugueseBrazilian => 100,
+            Self::ChineseSimplified => 100,
         }
     }
 }
@@ -110,6 +118,7 @@ fn set_language(language: Language) {
         Language::German => include_str!("../lang/de-DE.ftl"),
         Language::Polish => include_str!("../lang/pl-PL.ftl"),
         Language::PortugueseBrazilian => include_str!("../lang/pt-BR.ftl"),
+        Language::ChineseSimplified => include_str!("../lang/zh-CN.ftl"),
     }
     .to_owned();
 
