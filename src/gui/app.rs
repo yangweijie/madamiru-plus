@@ -1411,17 +1411,29 @@ impl App {
             }
             DM::DevicesFound(devices) => {
                 if devices.is_empty() {
-                    self.dlna_state = DlnaState::Error(crate::dlna::DlnaError::NoDevicesFound);
+                    // 没有找到设备，显示提示
+                    self.show_modal(Modal::Error {
+                        variant: crate::prelude::Error::ConfigInvalid {
+                            why: "未发现 DLNA 设备，请确保电视或其他设备在同一网络中".to_string(),
+                        },
+                    });
                 } else {
-                    self.dlna_state = DlnaState::DevicesReady(devices);
+                    // 显示设备选择模态框
+                    self.dlna_state = DlnaState::DevicesReady(devices.clone());
                     self.show_modal(Modal::DlnaDeviceSelect {
-                        devices: vec![],
+                        devices,
                         current_media: None,
                     });
                 }
             }
             DM::ScanError(err) => {
-                self.dlna_state = DlnaState::Error(crate::dlna::DlnaError::Discovery(err));
+                // 显示错误提示
+                self.show_modal(Modal::Error {
+                    variant: crate::prelude::Error::ConfigInvalid {
+                        why: format!("DLNA 扫描失败: {}", err),
+                    },
+                });
+                self.dlna_state = DlnaState::Idle;
             }
             DM::SelectDevice(device) => {
                 self.dlna_state = DlnaState::Connecting(device);
@@ -1557,12 +1569,26 @@ impl App {
             )
             .on_dismiss(Message::ShowMenu { show: Some(false) });
 
-            let right_controls = Row::new().push(
-                button::icon(Icon::Settings)
-                    .on_press(Message::ShowSettings)
+            let right_controls = Row::new()
+                .push(
+                    button::icon(match self.dlna_state {
+                        crate::dlna::DlnaState::Idle => Icon::Cast,
+                        crate::dlna::DlnaState::Scanning => Icon::Cast,
+                        crate::dlna::DlnaState::DevicesReady(_) => Icon::Cast,
+                        crate::dlna::DlnaState::Connecting(_) => Icon::Cast,
+                        crate::dlna::DlnaState::Playing { .. } => Icon::CastConnected,
+                        crate::dlna::DlnaState::Error(_) => Icon::Cast,
+                    })
+                    .on_press(Message::Dlna(crate::gui::common::DlnaMessage::ScanDevices))
                     .obscured(obscured)
-                    .tooltip_below(lang::thing::settings()),
-            );
+                    .tooltip_below("DLNA 投屏".to_string()),
+                )
+                .push(
+                    button::icon(Icon::Settings)
+                        .on_press(Message::ShowSettings)
+                        .obscured(obscured)
+                        .tooltip_below(lang::thing::settings()),
+                );
 
             let center_controls = Container::new(
                 Row::new()
