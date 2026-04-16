@@ -36,10 +36,12 @@ pub async fn discover_devices(timeout_secs: u64) -> Result<Vec<DlnaDevice>, Dlna
         .into_iter()
         .map(|r| {
             let device = &r.device;
+            // Get UDN from device specification, fallback to URL if not available
+            let udn = device.spec.udn.clone();
             DlnaDevice {
                 name: device.friendly_name().to_string(),
                 location: device.url().to_string(),
-                udn: device.url().to_string(), // Use URL as fallback for UDN
+                udn,
             }
         })
         .collect())
